@@ -10,8 +10,6 @@ This project showcases an end-to-end modern data engineering pipeline built for 
 
 ## 🧱 Architecture
 
-The ETL architecture follows a modular and scalable structure:
-
 Raw CSV Files (Uber Trips, Rates, Payment Info, etc.)
             |
             v
@@ -39,7 +37,6 @@ Raw CSV Files (Uber Trips, Rates, Payment Info, etc.)
             v
      Power BI Dashboard
   (Trips, Revenue, Tips, Groups)
-
 
 1. **Data Ingestion**  
    - Source: Raw CSVs or API  
