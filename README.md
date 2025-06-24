@@ -10,33 +10,7 @@ This project showcases an end-to-end modern data engineering pipeline built for 
 
 ## 🧱 Architecture
 
-Raw CSV Files (Uber Trips, Rates, Payment Info, etc.)
-            |
-            v
-     Python Data Cleaning
-            |
-            v
-  Containerized PostgreSQL (via Docker)
-        (Staging Layer)
-            |
-            v
-       Raw Tables Loaded
-            |
-            v
-          Airflow
-     (Triggers dbt models)
-            |
-            v
-       DBT Transforms
-   - Fact & Dimension Tables
-   - KPI views and aggregations
-            |
-            v
-     Cleaned Data Warehouse
-            |
-            v
-     Power BI Dashboard
-  (Trips, Revenue, Tips, Groups)
+![ETL Pipeline Diagram](etl_pipeline_diagram.png)
 
 1. **Data Ingestion**  
    - Source: Raw CSVs or API  
