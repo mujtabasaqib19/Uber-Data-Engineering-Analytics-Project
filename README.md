@@ -10,7 +10,7 @@ This project showcases an end-to-end modern data engineering pipeline built for 
 
 ## 🧱 Architecture
 
-![ETL Pipeline Diagram](etl_pipeline_diagram.png)
+![ETL Pipeline Diagram](pipeline.png)
 
 1. **Data Ingestion**  
    - Source: Raw CSVs or API  
