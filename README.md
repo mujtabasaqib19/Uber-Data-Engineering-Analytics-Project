@@ -76,7 +76,7 @@ Each `VIEW` was designed to support a specific Power BI visualization:
 | `vw_total_distance_card`        | Total kilometers traveled (card)               |
 | `vw_total_revenue_card`         | Total revenue earned (card)                    |
 
-![DAG](./assets/dbt_dag_view.png)
+![DAG](dag.png)
 
 ## 🚀 How to Run
 
