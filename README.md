@@ -36,12 +36,6 @@ The ETL architecture follows a modular and scalable structure:
 
 ---
 
-## 🗂️ DBT Lineage Graph
-
-![DBT Lineage](c8e21b62-96c1-4725-81ca-47ff56d0a6d3.png)
-
----
-
 ## 📊 Power BI Dashboard Highlights
 
 - **Total Kilometers Travelled:** 303,427.04 km  
