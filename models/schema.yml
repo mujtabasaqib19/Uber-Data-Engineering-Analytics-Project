@@ -1,0 +1,6 @@
+sources:
+  - name: uber                  # source name used in dbt
+    database: UBER_DATA         # your Snowflake database name
+    schema: PUBLIC              # because UBER_DATASET is under PUBLIC
+    tables:
+      - name: UBER_DATASET      # case-sensitive; match exactly
