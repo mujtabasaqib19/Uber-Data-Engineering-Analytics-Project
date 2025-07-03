@@ -1,0 +1,6 @@
+sources:
+  - name: uber_data           # 👈 lowercase (this is dbt's "logical name")
+    database: UBER_DATA       # 👈 Snowflake database name
+    schema: UBER              # 👈 Snowflake schema name
+    tables:
+      - name: UBERDATASET     # 👈 Snowflake table name (case-sensitive!)
