@@ -38,7 +38,7 @@ This project implements a **modern data pipeline** for processing Uber trip data
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/uber-data-pipeline.git
+git clone https://github.com/<mujtabasaqib19>/Uber-Data-Engineering-Analytics-Project.git
 cd uber-data-pipeline
 ```
 
