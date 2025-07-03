@@ -2,7 +2,7 @@
 
 This project implements a **modern data pipeline** for processing Uber trip data. It uses **Apache Airflow** for orchestration, **dbt** for data transformations, and **Snowflake** as the cloud data warehouse. The pipeline creates analytics-ready marts that can be used for Power BI or Tableau dashboards.
 ---
-![Uber Dashboard](assests/dashboard.png)
+![Uber Dashboard](dashboard.png)
 
 ## 📂 Project Structure
 
