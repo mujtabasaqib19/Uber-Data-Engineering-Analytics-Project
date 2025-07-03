@@ -1,94 +1,115 @@
-# 🚖 Uber Data Engineering & Analytics Project
+🚀 Uber Data Pipeline with Airflow, dbt & Snowflake
+This project implements a data pipeline using:
 
-![Uber Dashboard](Dashboard.png)
+Apache Airflow (for orchestration)
 
-## 📌 Project Overview
+dbt (for transformations)
 
-This project showcases an end-to-end modern data engineering pipeline built for Uber trip analytics. The pipeline extracts raw trip data, transforms it using `dbt`, models it into dimensional schemas in Snowflake, and visualizes key KPIs and trends using Power BI. Orchestration is handled via Apache Airflow.
+Snowflake (as the data warehouse)
 
----
+Astronomer Cosmos (for integrating dbt in Airflow)
 
-## 🧱 Architecture
+It processes Uber trip data to generate business-ready marts for analytics and Power BI dashboards.
 
-![ETL Pipeline Diagram](pipeline.png)
+📂 Project Structure
 
-1. **Data Ingestion**  
-   - Source: Raw CSVs or API  
-   - Destination: Snowflake (Raw Staging)
+.
+├── airflow/
+│   ├── dags/
+│   │   ├── uberdag.py         # Airflow DAG using Cosmos
+│   │   └── uberdbt/           # dbt project (models, seeds, etc.)
+│   ├── Dockerfile
+│   └── requirements.txt       # Airflow & Cosmos dependencies
+├── dbt/
+│   ├── dbt_project.yml
+│   ├── models/
+│   └── profiles.yml
+├── .env                        # Environment variables for Airflow & Snowflake
+├── docker-compose.yml          # Orchestrates Airflow with dbt
+└── README.md
+🛠 Prerequisites
+✅ Install Docker & Docker Compose
+✅ Snowflake account (with warehouse & schema created)
+✅ Python 3.8+ (for local dbt testing)
 
-2. **Transformation with dbt**  
-   - Models: `dim_date`, `dim_trip_distance`, `dim_passenger_count`, `fact_trips`, and views like:
-     - `vw_total_trip_count_card`
-     - `vw_avg_fare_per_day_run`
-     - `vw_high_tip_indicator`
-     - `vw_trip_summary_by_hour`
-   - Modeling: Star schema for optimized analytics
+⚙️ Setup
+1️⃣ Clone the repository
+bash
+Copy
+Edit
+git clone https://github.com/<your-username>/uber-data-pipeline.git
+cd uber-data-pipeline
+2️⃣ Configure Airflow connection for Snowflake
+In Airflow UI:
 
-3. **Orchestration with Apache Airflow**  
-   - Task sequencing, retries, and scheduling
-   - Airflow DAG: executes dbt models daily
+Go to Admin → Connections → New
 
-4. **Visualization**  
-   - Tool: Power BI
-   - Dashboards: KPIs, time-of-day analysis, tip patterns, passenger types
+Add a Snowflake connection:
 
----
+Field	Value
+Conn Id	snowflake_conn
+Conn Type	Snowflake
+Account	your_account.region (e.g. jc92948.ap-south-1)
+Warehouse	COMPUTE_WH
+Database	dbt_db
+Schema	dbt_schema
+Login	Your Snowflake username
+Password	Your Snowflake password
 
-## 📊 Power BI Dashboard Highlights
+3️⃣ Spin up Airflow
+bash
+Copy
+Edit
+docker-compose up -d
+Access Airflow at http://localhost:8080
+(Default user: airflow, password: airflow)
 
-- **Total Kilometers Travelled:** 303,427.04 km  
-- **Total Trip Count:** 354,750 trips  
-- **Total Revenue:** $1,639,072  
-- **Avg Fare per Trip:** $33.54  
-- **Trip Time Analysis:** Trips by Morning, Afternoon, Late Night  
-- **Payment Breakdown:** Cashless, Cash, Other  
-- **Passenger Groups:** Solo, Small Group, Large Group  
-- **Tip Behavior:** Low/Medium/High Tip segmentation  
-- **Rate Code Usage:** Standard Rate dominates
+4️⃣ Initialize dbt
+Inside the Airflow container:
 
----
-### Fact Table
-- `fact_trips`: Contains transactional trip data
+bash
+Copy
+Edit
+docker exec -it <scheduler-container> bash
+cd /usr/local/airflow/dags/uberdbt
+dbt deps  # Install dbt dependencies
+🚦 Running the Pipeline
+✅ Trigger the DAG in Airflow UI: dbt_snowflake_pipeline
 
-### Dimension Tables
-- `dim_datetime`
-- `dim_trip_distance`
-- `dim_passenger_count`
-- `dim_rate_code`
-- `dim_payment_type`
-- `dim_pickup_location`
-- `dim_dropoff_location`
+This will:
 
-Each `VIEW` was designed to support a specific Power BI visualization:
+Run dbt transformations (staging → intermediate → marts).
 
-| View Name                        | Purpose                                         |
-|----------------------------------|-------------------------------------------------|
-| `vw_daily_trips`                 | Daily trip count                               |
-| `vw_avg_fare_per_day`           | Average fare trends over time                  |
-| `vw_high_tip_indicator`         | Tip brackets (High, Medium, Low)               |
-| `vw_trip_summary_by_hour`       | Time-of-day trip metrics                       |
-| `vw_passenger_count_summary`    | Group size breakdown                           |
-| `vw_payment_type_analysis`      | Payment method share and tip trends            |
-| `vw_rate_code_share_case`       | Share of trips by rate code                    |
-| `vw_trip_distance_bucketed`     | Short, Medium, Long trip categorization        |
-| `vw_scatter_distance_fare`      | Scatter for fare vs. distance                  |
-| `vw_total_trip_count_card`      | Total trips (card)                             |
-| `vw_total_distance_card`        | Total kilometers traveled (card)               |
-| `vw_total_revenue_card`         | Total revenue earned (card)                    |
+Load marts into Snowflake for analytics.
 
-![DAG](dag.png)
+📊 BI Dashboard
+Once data is in Snowflake, you can connect Power BI/Tableau directly to:
 
-## 🚀 How to Run
+Trips mart: Detailed trip-level data
 
-1. Clone the repo
-2. Set up Snowflake connection and schema
-3. Run dbt models:
+Vendors mart: Aggregated metrics by vendor
 
-```bash
-dbt run
+Payments mart: Payment type breakdown
 
-Contact
-Made by Mujtaba Saqib
-📧 mujtabasaqib654@gmail.com
+🧪 Testing
+Run dbt tests:
 
+bash
+Copy
+Edit
+dbt test --profiles-dir profiles
+🔑 Key Technologies
+Apache Airflow: Workflow orchestration
 
+dbt: Data transformations & models
+
+Snowflake: Cloud data warehouse
+
+Astronomer Cosmos: Native dbt + Airflow integration
+
+🚀 Next Improvements
+Incremental dbt models for large datasets
+
+Role-based Airflow connections
+
+Deploy on AWS ECS / GCP Composer
